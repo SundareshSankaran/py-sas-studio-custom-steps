@@ -31,6 +31,13 @@ class CustomStep:
             self[key]=step_data[key]
         return step_data["templates"]["SAS"]
     
+    def create_custom_step(self, custom_step_path):
+        """This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path."""
+        import json
+        with open(custom_step_path,"w") as f:
+            json.dump(self.__dict__, f)
+        print(f"Custom Step created at {custom_step_path}")
+    
     def list_keys(self):
         """This function lists all keys forming part of a CustomStep object."""
         for key in self.__dict__:
