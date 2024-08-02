@@ -39,6 +39,10 @@ class CustomStep:
         print(f"Custom Step created at {custom_step_path}")
     
     def list_keys(self):
-        """This function lists all keys forming part of a CustomStep object."""
+        """This function lists and returns all keys forming part of a CustomStep object."""
+        keys = []
         for key in self.__dict__:
             print(key)
+            keys.append(key)
+        return keys
+    
