@@ -45,7 +45,7 @@ This package will evolve and add more functionality in a gradual manner.  Import
 - *list_keys:* List out all the attributes of a current custom step.
 
 ## Documentation
-Refer this [page](./DOCUMENTATION.md) for a list of all available methods and attributes.
+Refer this [page](./docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
 * Version: 0.1.0 (31JUL2024)
