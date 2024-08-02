@@ -1,20 +1,21 @@
 # py-sas-studio-custom-steps: A Python package for SAS Studio Custom Steps
 
-This repository provides a Python class and associated methods to facilitate operations on SAS Studio Custom Steps.  [SAS Studio Custom Steps](https://go.documentation.sas.com/doc/en/sasstudiocdc/default/webeditorcdc/webeditorsteps/titlepage.htm) are low-code components designed for a variety of analytical and data engineering operations on the SAS Viya platform (commercially available software).  They help users create a user interface for parameters, that can then be used to execute an associated SAS program.  Custom Steps provide easy access to common operations, boost code reusability, and help establish best practices in programming.
+This repository provides a Python class and associated methods to facilitate access to the content of SAS Studio Custom Steps.  [SAS Studio Custom Steps](https://go.documentation.sas.com/doc/en/sasstudiocdc/default/webeditorcdc/webeditorsteps/titlepage.htm) are low-code components designed for a variety of analytical and data engineering operations on the SAS Viya platform.  They help users create a user interface for parameters, that can then be used to execute an associated SAS program.  Custom Steps provide easy access to common operations, boost code reusability, and help establish best practices in programming.
 
-As SAS Viya continues to welcome a diverse set of users with different preferences (e.g. programming, low-code / no-code), a Python-based framework for interacting with custom steps aids code reusability, rapid development and testing of SAS solutions. This package can also be used to access and port custom step capabilities from non-SAS Studio applications, such as [SAS Viya Workbench](https://www.sas.com/en_us/software/viya/workbench.html).
+As SAS Viya continues to welcome a diverse set of users with different preferences (e.g. programming, low-code / no-code), a Python-based framework for interacting with custom steps aids code reusability, rapid development and testing of SAS solutions. This package can be used to access and port custom step capabilities from non-SAS Studio applications, such as [SAS Viya Workbench](https://www.sas.com/en_us/software/viya/workbench.html).
+
+Note that SAS Viya, SAS Viya Workbench etc. refer to commercially available software provided by SAS Institute.  This package is not officially provided or supported by SAS Institute, and only contains a convenient tool for extraction of relevant attributes (code and definition) of a SAS Studio Custom Step file.  It does not execute SAS algorithms or procedures.  SAS Programs and SAS Studio Custom Steps require a SAS / SAS Viya license to execute.
+
 
 ## Installation
 1. Clone this repository
-2. Run the following command for a  pip installation of the package from a local path in editable mode.
+2. Run the following command for a pip installation of the package from a local path in editable mode.
 
 ```shell
 
 pip install -e .
 
 ```
-
-**Future:** We plan to make this package available through PyPi in future, which would facilitate a direct pip install without having to clone this repository.
 
 ## Usage - quick example
 
@@ -48,7 +49,7 @@ This package will evolve and add more functionality in a gradual manner.  Import
 Refer this [page](./docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
-* Version: 0.1.0 (31JUL2024)
+* Version: 0.1.0 (02AUG2024)
 
 ## Contact
 * [Sundaresh Sankaran](sundaresh.sankaran@sas.com)

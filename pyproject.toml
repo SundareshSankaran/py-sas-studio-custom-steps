@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "py_sas_studio_custom_steps"
+version = "0.1.0"
+authors = [
+  { name="Sundaresh Sankaran", email="sundaresh.sankaran@sas.com" },
+]
+description = "A package containing a Python class and associated methods to facilitate operations on SAS Studio Custom Steps."
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache 2.0 License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/SundareshSankaran/py-sas-studio-custom-steps"
+Issues = "https://github.com/SundareshSankaran/py-sas-studio-custom-steps/issues"
