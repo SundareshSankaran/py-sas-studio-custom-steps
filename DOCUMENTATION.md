@@ -1,4 +1,4 @@
-# Package documentation
+# Package Documentation
 
 ## Methods
 
@@ -11,8 +11,10 @@ This function extracts and returns the SAS program portion of a custom step file
 1. self:  CustomStep() object
 2. custom_step_file:  Path to a SAS Studio Custom Step file
 
-**Output**
+**Returns**
 - String
+
+----
 
 ### create_custom_step
 *create_custom_step(self, custom_step_path)*
@@ -22,6 +24,8 @@ This function writes a CustomStep object to a SAS Studio Custom Step file at a d
 **Inputs**
 1. self:  CustomStep() object
 2. custom_step_path:  Path to a SAS Studio Custom Step file that will get created.
+
+----
 
 ### list_keys
 *list_keys(self, custom_step_file)*
@@ -34,9 +38,11 @@ This function lists and returns all keys forming part of a CustomStep object.
 **Returns**
 - List
 
+----
+
 ## Objects
 
-### - CustomStep
+### CustomStep
 
 **Attributes**
 
