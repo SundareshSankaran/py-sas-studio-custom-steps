@@ -4,7 +4,7 @@ This repository provides a Python class and associated methods to facilitate acc
 
 As SAS Viya continues to welcome a diverse set of users with different preferences (e.g. programming, low-code / no-code), a Python-based framework for interacting with custom steps aids code reusability, rapid development and testing of SAS solutions. This package can be used to access and port custom step capabilities from non-SAS Studio applications, such as [SAS Viya Workbench](https://www.sas.com/en_us/software/viya/workbench.html).
 
-Note that SAS Viya, SAS Viya Workbench etc. refer to commercially available software provided by SAS Institute.  This package is not officially provided or supported by SAS Institute, and only contains a convenient tool for extraction of relevant attributes (code and definition) of a SAS Studio Custom Step file.  It does not execute SAS algorithms or procedures.  SAS Programs and SAS Studio Custom Steps require a SAS / SAS Viya license to execute.
+Note that SAS Viya, SAS Viya Workbench etc. refer to commercially available software provided by SAS Institute.  This package is currently not officially provided or supported by SAS Institute. It only contains a convenient tool for manipulating a SAS Studio Custom Step, a serialized file.  It does not execute SAS algorithms or procedures.  SAS Programs and SAS Studio Custom Steps require a SAS / SAS Viya license to execute.
 
 
 ## Installation
