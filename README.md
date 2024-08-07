@@ -9,11 +9,13 @@ Note that SAS Viya, SAS Viya Workbench etc. refer to commercial software provide
 
 ## Installation
 1. Clone this repository
-2. Run the following command for a pip installation of the package from a local path in editable mode.
+2. To install locally in editable mode, refer [here](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/blob/main/scripts/local_install_quick_start.md)
+
+Run the following command for a pip installation of the package from PyPi.
 
 ```shell
 
-pip install -e .
+pip install --upgrade py-sas-studio-custom-steps
 
 ```
 
