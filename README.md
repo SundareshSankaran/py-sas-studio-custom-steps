@@ -51,6 +51,8 @@ This package will evolve and add more functionality in a gradual manner.  Import
 Refer this [page](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/tree/main/docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
+* Version: 0.2.3 (07AUG2024)
+  - New method to instantiate a class through a Custom Step file
 * Version: 0.1.3 (07AUG2024)
   - Initial version plus teething bug / doc fixes
 
