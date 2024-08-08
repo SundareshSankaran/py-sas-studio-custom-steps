@@ -16,6 +16,21 @@ This function extracts and returns the SAS program portion of a custom step file
 
 ----
 
+### load_step_file
+*load_step_file(self, custom_step_file)*
+
+This functions loads a custom step object with attributes contained in a custom step file (.step).  Provide the full path to the custom step as an argument.
+
+**Inputs**
+1. self:  CustomStep() object
+2. custom_step_file:  Path to a SAS Studio Custom Step file
+
+**Returns**
+- CustomStep
+
+----
+
+
 ### create_custom_step
 *create_custom_step(self, custom_step_path)*
 
@@ -44,7 +59,7 @@ This function lists and returns all keys forming part of a CustomStep object.
 
 ### CustomStep
 
-**Attributes**
+**Attributes of a CustomStep object**
 
 *The current operations covered by this package do not require knowledge of all attributes of a SAS Studio Custom Step, and therefore only some of them are described here.  This should not be interpreted as official documentation of a SAS Studio Custom Step.*
 
@@ -63,3 +78,4 @@ This function lists and returns all keys forming part of a CustomStep object.
 13. flowMetadata
 14. ui: section containing the custom step prompt
 15. templates: section containing the code generation for the custom step.  SAS Programs are identified by a further key called 'SAS'
+16. custom_step_file: a path to a SAS Studio Custom Step provided at time of initialisation.  Passed with double quotes.
