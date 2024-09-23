@@ -49,11 +49,35 @@ class CustomStep:
     def __setitem__(self, key, value):
         setattr(self, key, value)
    
+    def create_custom_step(self, custom_step_path):
+        """This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path."""
+        import json
+        with open(custom_step_path,"w") as f:
+            json.dump(self.__dict__, f)
+        print(f"Custom Step created at {custom_step_path}")
+
     def extract_sas_program(self,custom_step_file):
         """This function extracts and returns the SAS program portion of a custom step file.  Provide the full path to the custom step as an argument."""
         step_data = self.load_step_file(custom_step_file)
         return step_data["templates"]["SAS"]
-    
+        
+    def get_pages(self):
+        """This function returns all pages provided in a CustomStep object. Introduced v0.3.3"""
+        import json
+        pages = []
+        ui = json.loads(self.__dict__["ui"])
+        for page in ui["pages"]:
+            pages.append(page)
+        return pages
+
+    def list_keys(self):
+        """This function lists and returns all keys forming part of a CustomStep object."""
+        keys = []
+        for key in self.__dict__:
+            print(key)
+            keys.append(key)
+        return keys
+
     def load_step_file(self, custom_step_file):
         "This functions loads a custom step object with attributes contained in a custom step file"
         import json
@@ -62,19 +86,5 @@ class CustomStep:
         for key in step_data:
             self[key]=step_data[key]
         return step_data
-    
-    def create_custom_step(self, custom_step_path):
-        """This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path."""
-        import json
-        with open(custom_step_path,"w") as f:
-            json.dump(self.__dict__, f)
-        print(f"Custom Step created at {custom_step_path}")
-    
-    def list_keys(self):
-        """This function lists and returns all keys forming part of a CustomStep object."""
-        keys = []
-        for key in self.__dict__:
-            print(key)
-            keys.append(key)
-        return keys
+
     

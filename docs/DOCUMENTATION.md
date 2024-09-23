@@ -22,7 +22,7 @@ This function extracts and returns the SAS program portion of a custom step file
 This functions loads a custom step object with attributes contained in a custom step file (.step).  Provide the full path to the custom step as an argument.
 
 **Inputs**
-1. self:  CustomStep() object
+1. self:  CustomStep object
 2. custom_step_file:  Path to a SAS Studio Custom Step file
 
 **Returns**
@@ -37,7 +37,7 @@ This functions loads a custom step object with attributes contained in a custom 
 This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path.
 
 **Inputs**
-1. self:  CustomStep() object
+1. self:  CustomStep object
 2. custom_step_path:  Path to a SAS Studio Custom Step file that will get created.
 
 ----
@@ -48,7 +48,20 @@ This function writes a CustomStep object to a SAS Studio Custom Step file at a d
 This function lists and returns all keys forming part of a CustomStep object.
 
 **Input**
-- self:  CustomStep() object
+- self:  CustomStep object
+
+**Returns**
+- List
+
+----
+
+### get_pages
+*get_pages(self)*
+
+This function returns all pages provided in a CustomStep object. Introduced v0.3.3
+
+**Input**
+- self:  CustomStep object
 
 **Returns**
 - List
