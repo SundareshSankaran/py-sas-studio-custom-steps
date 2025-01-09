@@ -1,6 +1,6 @@
 class CustomStep:
     """This class helps you perform operations on a SAS Studio Custom Step programmatically"""
-    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui=None, templates=None) -> None:
+    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui=None, templates={"SAS":""}) -> None:
 
         # Initialisation of attributes
         self.name=None 
@@ -14,10 +14,10 @@ class CustomStep:
         self.links=None
         self.metadataVersion=None
         self.version=None
-        self.type=None
+        self.type="code"
         self.flowMetadata=None
         self.ui=None
-        self.templates=None
+        self.templates={"SAS":""}
 
         # Load atttributes present in a custom step file
         if custom_step_file:
@@ -60,6 +60,21 @@ class CustomStep:
         """This function extracts and returns the SAS program portion of a custom step file.  Provide the full path to the custom step as an argument."""
         step_data = self.load_step_file(custom_step_file)
         return step_data["templates"]["SAS"]
+    
+    def attach_sas_program(self,sas_file):
+        """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""
+        with open(sas_file,"r") as sas_f:
+            self["templates"]={"SAS":sas_f.read()}
+        return self
+    
+    def attach_ui(self,ui_json_file):
+        """This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument."""
+        import json
+        with open(ui_json_file,"r") as f:
+             js = json.load(f)
+        jsd = json.dumps(js)
+        self["ui"]=jsd
+        return self
         
     def get_pages(self):
         """This function returns all pages provided in a CustomStep object. Introduced v0.3.3"""

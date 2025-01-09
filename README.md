@@ -6,7 +6,6 @@ As SAS Viya continues to welcome a diverse set of users with different preferenc
 
 Note that SAS Viya, SAS Viya Workbench etc. refer to commercial software provided by SAS Institute.  The package in this repository is currently not officially provided or supported by SAS Institute. It only contains a convenient tool for manipulating a SAS Studio Custom Step, a serialized file.  It does not execute SAS algorithms or procedures.  SAS Programs and SAS Studio Custom Steps require a SAS / SAS Viya license to execute.
 
-
 ## Installation
 1. Clone this repository
 2. To install locally in editable mode, refer [here](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/blob/main/scripts/local_install_quick_start.md)
@@ -46,17 +45,21 @@ This package will evolve and add more functionality in a gradual manner.  Import
 - *extract_sas_program:* Extract the SAS program from a given custom step
 - *create_custom_step:* Write a custom step (CustomStep) object to a SAS Studio Custom Step (.step) file
 - *list_keys:* List out all the attributes of a current custom step.
+- *attach_sas_program:* Attaches content of a SAS program to a custom step object.
+- *attach_ui:* Attaches UI component definitions to a custom step object.
 
 ## Documentation
 Refer this [page](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/tree/main/docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
+* Version: 0.4.0 (09JAN2025)
+  - Methods to add SAS program and UI components to a Custom Step
 * Version: 0.3.3 (22SEP2024)
   - New method to return pages from a Custom Step object
 * Version: 0.2.3 (07AUG2024)
   - New method to instantiate a class through a Custom Step file
 * Version: 0.1.3 (07AUG2024)
-  - Initial version plus teething bug / doc fixes
+  - Initial version plus teething issues / doc fixes
 
 ## Contact
 * [Sundaresh Sankaran](mailto:sundaresh.sankaran@sas.com)
