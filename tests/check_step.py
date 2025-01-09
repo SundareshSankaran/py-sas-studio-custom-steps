@@ -101,5 +101,9 @@ class CustomStep:
         for key in step_data:
             self[key]=step_data[key]
         return step_data
-
     
+cs = CustomStep()
+
+cs.attach_sas_program(sas_file="/Users/sinsrn/current_projects/py-sas-studio-custom-steps/tests/example_sas_code.sas")
+cs.attach_ui(ui_json_file="/Users/sinsrn/current_projects/py-sas-studio-custom-steps/tests/example_components.json")
+cs.create_custom_step(custom_step_path="/Users/sinsrn/current_projects/py-sas-studio-custom-steps/tests/ExampleStep.step")
