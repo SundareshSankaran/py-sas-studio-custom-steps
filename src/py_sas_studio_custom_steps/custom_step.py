@@ -68,7 +68,7 @@ class CustomStep:
         return self
     
     def attach_ui(self,ui_json_file):
-        """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""
+        """This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument."""
         import json
         with open(ui_json_file,"r") as f:
              js = json.load(f)

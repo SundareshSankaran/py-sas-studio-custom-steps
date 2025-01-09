@@ -67,6 +67,24 @@ This function returns all pages provided in a CustomStep object. Introduced v0.3
 - List
 
 ----
+### attach_sas_program
+*attach_sas_program(self,sas_file)*
+
+This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument.
+
+**Inputs**
+1. self:  CustomStep object
+2. sas_file:  Path to a SAS program file used for the code gen.
+
+----
+### attach_ui
+*attach_ui(self,ui_json_file)*
+
+This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument.
+
+**Inputs**
+1. self:  CustomStep object
+2. ui_json_file:  Path to a JSON containing UI components, aligning to the PromptUI section of a custom step.
 
 ## Objects
 
