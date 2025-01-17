@@ -53,7 +53,7 @@ This package will evolve and add more functionality in a gradual manner.  Import
 Refer this [page](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/tree/main/docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
-* Version: 0.5.0 (17JAN2025)
+* Version: 0.5.1 (17JAN2025)
   - Method to create a README file 
 * Version: 0.4.0 (09JAN2025)
   - Methods to add SAS program and UI components to a Custom Step
