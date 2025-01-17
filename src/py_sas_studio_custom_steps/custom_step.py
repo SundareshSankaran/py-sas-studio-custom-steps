@@ -143,8 +143,11 @@ class CustomStep:
                            "- Refer to the [steps listed here](https://github.com/sassoftware/sas-studio-custom-steps#getting-started---making-a-custom-step-from-this-repository-available-in-sas-studio).\n"
                            "----\n"
                            "## Created/contact:\n\n"
+                           f"- Created by {self.createdBy}\n"
                            "----\n"
-                           "## Change Log\n\n")
+                           "## Change Log\n"
+                           f"* Version {self.version}({self.modifiedTimeStamp})\n    - <Enter changes here>"
+                           )
             
         with open(readme_file,"w") as f:
             f.write(readme_template)
