@@ -58,7 +58,9 @@ This function lists and returns all keys forming part of a CustomStep object.
 ### get_pages
 *get_pages(self)*
 
-This function returns all pages provided in a CustomStep object. Introduced v0.3.3
+*Version 0.3.3 onwards*
+
+This function returns all pages provided in a CustomStep object. 
 
 **Input**
 - self:  CustomStep object
@@ -70,6 +72,8 @@ This function returns all pages provided in a CustomStep object. Introduced v0.3
 ### attach_sas_program
 *attach_sas_program(self,sas_file)*
 
+*Version 0.4.0 onwards*
+
 This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument.
 
 **Inputs**
@@ -80,11 +84,23 @@ This function extracts the contents of a given SAS program and attaches it to th
 ### attach_ui
 *attach_ui(self,ui_json_file)*
 
+*Version 0.4.0 onwards*
+
 This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument.
+
+----
+### generate_readme
+*generate_readme(self,readme_file, description, trigger_name)*
+
+*Version 0.5.0 onwards*
+
+This function generates a README file for a custom step object. Provide the full path to the README file as an argument.  The README makes use of a template which has been developed based on experience.  The function can be edited to modify the same.
 
 **Inputs**
 1. self:  CustomStep object
-2. ui_json_file:  Path to a JSON containing UI components, aligning to the PromptUI section of a custom step.
+2. readme_file:  Path to a target README file that will be created by the function.  Existing files are overwritten.
+3. description: Description of the custom step provided by the designer
+4. trigger_name:  Name of a trigger macro variable to facilitate run-time control of the custom step. Set to blank by default.
 
 ## Objects
 
