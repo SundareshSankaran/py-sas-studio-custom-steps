@@ -47,11 +47,14 @@ This package will evolve and add more functionality in a gradual manner.  Import
 - *list_keys:* List out all the attributes of a current custom step.
 - *attach_sas_program:* Attaches content of a SAS program to a custom step object.
 - *attach_ui:* Attaches UI component definitions to a custom step object.
+- *generate_readme:* Creates a README file as per user specification.
 
 ## Documentation
 Refer this [page](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/tree/main/docs/DOCUMENTATION.md) for a list of all available methods and attributes.
 
 ## Change Log
+* Version: 0.5.0 (17JAN2025)
+  - Method to create a README file 
 * Version: 0.4.0 (09JAN2025)
   - Methods to add SAS program and UI components to a Custom Step
 * Version: 0.3.3 (22SEP2024)
