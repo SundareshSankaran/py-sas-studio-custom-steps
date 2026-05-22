@@ -2,3 +2,4 @@
 *.egg-info
 package
 build
+.DS_Store
