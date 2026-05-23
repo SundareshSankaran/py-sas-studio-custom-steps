@@ -1,7 +1,7 @@
 class CustomStep:
     """This class helps you perform operations on a SAS Studio Custom Step programmatically"""
-    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui=None, templates={"SAS":""}) -> None:
-
+    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui={"showPageContentOnly": True, "pages": []}, templates={"SAS":""}) -> None:
+        import json
         # Initialisation of attributes
         self.name=None 
         self.creationTimeStamp=None 
@@ -16,35 +16,35 @@ class CustomStep:
         self.version=None
         self.type="code"
         self.flowMetadata=None
-        self.ui=None
+        self.ui=json.dumps({"showPageContentOnly": True, "pages": []})
         self.templates={"SAS":""}
 
         # Load atttributes present in a custom step file
         if custom_step_file:
             #Load file
             import json
-            with open(custom_step_file) as step_file:
+            with open(custom_step_file,"r", encoding="utf-8") as step_file:
                 step_data = json.load(step_file)
-            for key in step_data:
-                self[key]=step_data[key]
-
-        # Assign attributes which have been provided
-        import uuid
-        self.name=name if name else f"Auto_Generated_{uuid.uuid4()}"
-        self.creationTimeStamp=creationTimeStamp if creationTimeStamp else self.creationTimeStamp 
-        self.modifiedTimeStamp=modifiedTimeStamp if modifiedTimeStamp else self.modifiedTimeStamp
-        self.createdBy=createdBy  if createdBy else self.createdBy
-        self.modifiedBy=modifiedBy if modifiedBy else self.modifiedBy
-        self.displayName=displayName if displayName else self.displayName
-        self.localDisplayName=localDisplayName if localDisplayName else self.localDisplayName
-        self.properties=properties if properties else self.properties
-        self.links=links if links else self.links
-        self.metadataVersion=metadataVersion if metadataVersion else self.metadataVersion
-        self.version=version if version else self.version
-        self.type=type if type else self.type
-        self.flowMetadata=flowMetadata if flowMetadata else self.flowMetadata
-        self.ui=ui if ui else self.ui
-        self.templates=templates if templates else self.templates
+            for key,value in step_data.items():
+                self[key]=value
+        else:
+            # Assign attributes which have been provided
+            import uuid
+            self.name=name if name else f"Auto_Generated_{uuid.uuid4()}"
+            self.creationTimeStamp=creationTimeStamp if creationTimeStamp else self.creationTimeStamp 
+            self.modifiedTimeStamp=modifiedTimeStamp if modifiedTimeStamp else self.modifiedTimeStamp
+            self.createdBy=createdBy  if createdBy else self.createdBy
+            self.modifiedBy=modifiedBy if modifiedBy else self.modifiedBy
+            self.displayName=displayName if displayName else self.displayName
+            self.localDisplayName=localDisplayName if localDisplayName else self.localDisplayName
+            self.properties=properties if properties else self.properties
+            self.links=links if links else self.links
+            self.metadataVersion=metadataVersion if metadataVersion else self.metadataVersion
+            self.version=version if version else self.version
+            self.type=type if type else self.type
+            self.flowMetadata=flowMetadata if flowMetadata else self.flowMetadata
+            self.ui=json.dumps(ui) if ui else self.ui
+            self.templates=templates if templates else self.templates
 
     def __setitem__(self, key, value):
         setattr(self, key, value)
@@ -52,14 +52,26 @@ class CustomStep:
     def create_custom_step(self, custom_step_path):
         """This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path."""
         import json
-        with open(custom_step_path,"w") as f:
+        with open(custom_step_path,"w", encoding="utf-8") as f:
             json.dump(self.__dict__, f)
         print(f"Custom Step created at {custom_step_path}")
+        return self
 
-    def extract_sas_program(self,custom_step_file):
-        """This function extracts and returns the SAS program portion of a custom step file.  Provide the full path to the custom step as an argument."""
-        step_data = self.load_step_file(custom_step_file)
+    def extract_sas_program(self,custom_step_file) -> str:
+        """This function extracts and returns the SAS program portion of a custom step file.  Provide the full path or URLto the custom step as an argument."""
+        if not custom_step_file:
+            step_data = self.__dict__["templates"]["SAS"]
+        else:
+            step_data = self.load_step_file(custom_step_file)
         return step_data["templates"]["SAS"]
+    
+    def extract_ui(self,custom_step_file) -> str:
+        """This function extracts and returns the UI configuration of a custom step file.  Provide the full path or URL to the custom step as an argument."""
+        if not custom_step_file:
+            step_data = self.__dict__["ui"]
+        else:
+            step_data = self.load_step_file(custom_step_file)
+        return step_data["ui"]
     
     def attach_sas_program(self,sas_file):
         """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""
@@ -76,7 +88,7 @@ class CustomStep:
         self["ui"]=jsd
         return self
         
-    def get_pages(self):
+    def get_pages(self) -> list:
         """This function returns all pages provided in a CustomStep object. Introduced v0.3.3"""
         import json
         pages = []
@@ -94,13 +106,34 @@ class CustomStep:
         return keys
 
     def load_step_file(self, custom_step_file):
-        "This functions loads a custom step object with attributes contained in a custom step file"
+        "This functions loads a custom step object with attributes contained in a custom step file, either local or from a URL."
         import json
-        with open(custom_step_file) as step_file:
-            step_data = json.load(step_file)
-        for key in step_data:
-            self[key]=step_data[key]
+        from pathlib import Path
+        from urllib.parse import urlparse
+        import requests
+        parsed = urlparse(custom_step_file)
+        if parsed.scheme in ("http", "https"):
+            url = custom_step_file
+            if "github.com" in parsed.netloc and "/blob/" in parsed.path:
+                url = custom_step_file.replace("github.com/", "raw.githubusercontent.com/").replace("/blob/", "/")
+            response = requests.get(url)
+            response.raise_for_status()
+            step_data = response.json()
+        else:
+            with open(custom_step_file,"r", encoding="utf-8") as step_file:
+                step_data = json.load(step_file)
+        for key, value in step_data.items():
+            self[key]=value
         return step_data
+    
+    def add_about_page(self):
+        """This function adds a templated About page to the UI of a custom step object."""
+        from .create_about_page import about_page
+        import json
+        ui = json.loads(self.__dict__["ui"])
+        ui["pages"].append(about_page)
+        self["ui"]=json.dumps(ui)
+        return self
     
     def generate_readme(self, readme_file, description, trigger_name=""):
         """This function generates a README file for a custom step object. Provide the full path to the README file as an argument."""

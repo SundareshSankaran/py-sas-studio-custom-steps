@@ -3,3 +3,9 @@
 package
 build
 .DS_Store
+__pycache__
+*/venv
+venv
+.env
+*/.ipynb_checkpoints
+*/__pycache__

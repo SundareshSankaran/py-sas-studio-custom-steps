@@ -15,6 +15,19 @@ This function extracts and returns the SAS program portion of a custom step file
 - String
 
 ----
+### extract_ui
+*extract_ui(self, custom_step_file)*
+
+This function extracts and returns the SAS program portion of a custom step file.  Provide the full path or URL to the custom step as an argument.
+
+**Inputs**
+1. self:  CustomStep() object
+2. custom_step_file:  Path to a SAS Studio Custom Step file
+
+**Returns**
+- String
+
+----
 
 ### load_step_file
 *load_step_file(self, custom_step_file)*

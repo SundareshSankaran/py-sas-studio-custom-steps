@@ -1,0 +1,228 @@
+{
+	"showPageContentOnly": true,
+	"pages": [
+		{
+			"id": "parameters",
+			"type": "page",
+			"label": "Parameters",
+			"children": [
+				{
+					"id": "text1",
+					"type": "text",
+					"text": "",
+					"visible": ""
+				},
+				{
+					"id": "inputtable",
+					"type": "inputtable",
+					"label": "Provide an input dataset:",
+					"required": false,
+					"placeholder": "",
+					"visible": ""
+				},
+				{
+					"id": "text2",
+					"type": "text",
+					"text": "Note: If you have attached input data to the \"inputtable\" input port of this custom step, ensure you refer to the same as r_input_table within your R script.",
+					"visible": "$inputtable"
+				},
+				{
+					"id": "inputRScript",
+					"type": "path",
+					"label": "Provide your R script location:",
+					"pathtype": "file",
+					"placeholder": "/path/to/your/R/Script",
+					"required": false,
+					"visible": ""
+				},
+				{
+					"id": "rrrarea",
+					"type": "textarea",
+					"label": "Run an R snippet:",
+					"placeholder": "",
+					"required": false,
+					"visible": "!$inputRScript"
+				},
+				{
+					"id": "output_rdf_name",
+					"type": "textfield",
+					"label": "Provide name of R data frame you wish to output:",
+					"placeholder": "",
+					"required": false,
+					"visible": ""
+				},
+				{
+					"id": "text3",
+					"type": "text",
+					"text": "Note: If you are using this step, ensure that the R dataframe you refer does exist in the R session.",
+					"visible": ""
+				},
+				{
+					"id": "envData",
+					"type": "outputtable",
+					"label": "Provide output dataset for R environment variables:",
+					"required": false,
+					"placeholder": "WORK.__TEMP_R_ENV_VARIABLES",
+					"visible": ""
+				},
+				{
+					"id": "outputtable",
+					"type": "outputtable",
+					"label": "Provide desired output table:",
+					"required": false,
+					"placeholder": "",
+					"visible": "$output_rdf_name"
+				}
+			]
+		},
+		{
+			"id": "config_tab",
+			"type": "page",
+			"label": "Configuration",
+			"children": [
+				{
+					"id": "rHomePath",
+					"type": "textfield",
+					"label": "Enter path to R_HOME:",
+					"placeholder": "/opt/sas/viya/home/sas-pyconfig/default_r/lib64/R",
+					"required": false,
+					"visible": ""
+				}
+			]
+		},
+		{
+			"id": "about_tab",
+			"type": "page",
+			"label": "About",
+			"children": [
+				{
+					"id": "about_text",
+					"type": "text",
+					"text": "R Runner\n=======\n\nR Runner enables you to submit R scripts from within SAS Studio and develop integrated analytics pipelines.\n\nYou can submit either:\n\n1. Short R snippets in the text area provided\n\n2. R scripts (programs) through a file selector\n\nVariables created within the R script (also known as R environment variables) can also be written to an output SAS dataset for reference and reuse in downstream code.  \n\nIn this early version, you'll also be able to attach an input table (SAS dataset) to the custom step, which will be converted to an R data frame (via Python) for analysis in the R script.\n\n",
+					"visible": ""
+				},
+				{
+					"id": "early_release_notes",
+					"type": "section",
+					"label": "IMPORTANT NOTE for this early version (please expand!)",
+					"open": false,
+					"visible": "",
+					"children": [
+						{
+							"id": "early_release_text",
+							"type": "text",
+							"text": "This is the first release of R Runner and facilitates the basic task of executing R scripts within SAS Studio.  We'll consider additional improvements in future.\n\nTo set correct expectations,\n\n- R Runner should NOT be considered an R editor / IDE for SAS Studio (though it's tempting for us, the creators, to label it so :)).   \n\n- Given the recency of this step, there are bound to be teething troubles.  We appreciate your patience (and even more so, suggestions and contributions). \n\n- While this may seem obvious, do not expect syntax checks, highlighting or other convenience you are used to with R interfaces.",
+							"visible": ""
+						}
+					]
+				},
+				{
+					"id": "about_parameters",
+					"type": "section",
+					"label": "Parameters",
+					"open": false,
+					"visible": "",
+					"children": [
+						{
+							"id": "parameters_text",
+							"type": "text",
+							"text": "This custom step accesses an R interpreter through a Python package (rpy2).  Therefore, ensure:\n\n1. SAS Viya has access to an active Python (version >=3.7) and R ( >= 4.0 ) environment.  Proc Python makes use of this Python environment.\n\n2. The rpy2 Python package is installed and configured. Refer documentation for details on rpy2.  Recommended rpy2 details (on which this step is based): 3.5.13\n\n3. A path to R is available through the R_HOME environment variable.\n\n4. Preferable / recommended:  Administrators could make use of the SAS Configurator for Open Source (also commonly known as sas-pyconfig) to install and configure Python and R access from SAS Viya.  Refer SAS Viya Deployment Guide (monthly stable 2023.08 onwards) for instructions on the same. Documentation provided below.\n\n5. If you want this step to interact with input / output data, the pandas Python package along with the SAS callback method is used under the covers to convert the table to a pandas dataframe (and then to R).  Pandas should be installed.",
+							"visible": ""
+						},
+						{
+							"id": "parameters_input",
+							"type": "section",
+							"label": "Input Parameters",
+							"open": true,
+							"visible": "",
+							"children": [
+								{
+									"id": "input_parameters_text",
+									"type": "text",
+									"text": "1. Input Data (input port, optional): attach an input table (SAS dataset) to this port to facilitate analysis in R.  You should refer this input dataset as r_input_table inside the R script. \n\n2. Input R Script (file selector, optional):  attach an R script which you wish to execute.\n\n3. R Snippet (text area, optional): use this for short (less than 32768 characters) snippets of R code you wish to execute.\n\nEnsure your R script is styled and  indented as per R conventions to avoid failures.\n\n4. R dataframe to output (text field, optional): refer an R dataframe (which exists in the R session) which you desire to output to a SAS dataset for downstream analysis.\n\n5. Output table (output port, optional): attach a SAS dataset to this port which will contain data from a R dataframe you wish to output.\n\n6. R_HOME path (Configuration tab, verify/change defaults): rpy2  needs to know where to find R on the system.  Change this default value after consulting your administrator.  The default is based on an environment where R and Python are installed using the SAS Configurator for Open Source (also known as sas-pyconfig) and sas-open-source-config utilities.",
+									"visible": ""
+								}
+							]
+						},
+						{
+							"id": "parameters_output_specs",
+							"type": "section",
+							"label": "Output Specifications",
+							"open": true,
+							"visible": "",
+							"children": [
+								{
+									"id": "output_parameters_text",
+									"type": "text",
+									"text": "- Reference dataset for R environment variables (output port, optional) : attach a SAS dataset to the envData output port of this custom step to refer variables created during R execution.  These are known as R environment variables and can be accessed through the globalenvs attribute of the robjects object in rpy2 (documentation below).",
+									"visible": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"id": "about_documentation",
+					"type": "section",
+					"label": "Documentation",
+					"open": false,
+					"visible": "",
+					"children": [
+						{
+							"id": "documentation_text",
+							"type": "text",
+							"text": "1. Documentation on the rpy2 package: https://rpy2.github.io/doc/latest/html/introduction.html\n\n2. Access to R from inside a SAS Viya environment is governed by some environment variables, including R_HOME and DM_RHOME, used within this custom step to configure the rpy2 package.  Refer this link (and embedded references) for instructions on configuring open source environments with SAS Viya: https://go.documentation.sas.com/doc/en/sasadmincdc/default/dplyml0phy0dkr/n08u2yg8tdkb4jn18u8zsi6yfv3d.htm#n0mq2y83d72jr8n1va9uuv04vx76\n\n3. The following SAS Communities article on R integration is also useful: https://communities.sas.com/t5/SAS-Communities-Library/Configuring-SAS-Viya-for-R-Integration/ta-p/848186\n\n4. The SAS Viya Platform Deployment Guide (refer to SAS Configurator for Open Source within): https://go.documentation.sas.com/doc/en/itopscdc/default/itopssr/p1n66p7u2cm8fjn13yeggzbxcqqg.htm?fromDefault=#p19cpvrrjw3lurn135ih46tjm7oi ",
+							"visible": ""
+						}
+					]
+				},
+				{
+					"id": "known_issues",
+					"type": "section",
+					"label": "Some known issues & behaviour",
+					"open": false,
+					"visible": "",
+					"children": [
+						{
+							"id": "known_issues_text",
+							"type": "text",
+							"text": "This is not a comprehensive list of all known issues with rpy2. However, it's likely you may encounter some of these (given that you are working with THREE languages !) issues and the following links may be helpful.\n\n1. Pandas may not transfer cleanly to R dataframe due to a mismatch in types: https://stackoverflow.com/questions/60197294/error-when-using-pandas-dataframe-in-r-cell-in-rpy2-jupyter-notebook\n\n2. A table may be created but you are not able to access / export it.  This might be due to global envs vs. local sessions: https://stackoverflow.com/questions/15227926/rpy2-object-not-found-error",
+							"visible": ""
+						}
+					]
+				},
+				{
+					"id": "change_log_text",
+					"type": "text",
+					"text": "Version: 1.0  (18AUG2023)",
+					"visible": ""
+				},
+				{
+					"id": "contact_text",
+					"type": "text",
+					"text": "Created/contact: \n\n- Samiul Haque (samiul.haque@sas.com)\n\n- Sundaresh Sankaran (sundaresh.sankaran@sas.com)",
+					"visible": ""
+				}
+			]
+		}
+	],
+	"syntaxversion": "1.3.0",
+	"values": {
+		"inputtable": {
+			"library": "",
+			"table": ""
+		},
+		"inputRScript": "",
+		"rrrarea": "cat(\"R Runner. The coyote is after you...\")",
+		"output_rdf_name": "",
+		"envData": {
+			"library": "",
+			"table": ""
+		},
+		"outputtable": {
+			"library": "",
+			"table": ""
+		},
+		"rHomePath": "/opt/sas/viya/home/sas-pyconfig/default_r/lib64/R"
+	}
+}

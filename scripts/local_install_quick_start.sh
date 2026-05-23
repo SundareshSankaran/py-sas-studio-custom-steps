@@ -16,8 +16,14 @@ python -m venv $1
 # upgrade pip to latest
 python -m pip install --upgrade pip
 
-# Install the package
-python -m pip install --upgrade -e .
+# install uv for faster installation
+python -m pip install --upgrade uv
+
+# Install helper requirements
+python -m uv pip install -r requirements.txt
+
+# Install this package
+cd .. && python -m pip install --upgrade -e .
 
 echo "---------------------------------------------"
 echo "Package installed in virtual environment $1"
