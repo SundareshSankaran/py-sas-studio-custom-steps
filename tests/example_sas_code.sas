@@ -1,4 +1,3 @@
-/* SAS templated code goes here */
-
-proc print data= SASHELP.CARS;
+title "This is meant to show an example of SAS code that can be used in the tests";
+proc print data=sashelp.cars (obs=10);
 run;

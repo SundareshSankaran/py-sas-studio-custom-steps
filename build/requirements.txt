@@ -1,0 +1,8 @@
+python-dotenv
+setuptools
+py-sas-studio-custom-steps
+build
+twine
+google-genai
+jupyter
+ipykernel

@@ -1,6 +1,6 @@
 class CustomStep:
     """This class helps you perform operations on a SAS Studio Custom Step programmatically"""
-    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui={"showPageContentOnly": True, "pages": []}, templates={"SAS":""}) -> None:
+    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui={"showPageContentOnly": True, "pages": []}, templates={"SAS":""}) -> object:
         import json
         # Initialisation of attributes
         self.name=None 
@@ -21,12 +21,7 @@ class CustomStep:
 
         # Load atttributes present in a custom step file
         if custom_step_file:
-            #Load file
-            import json
-            with open(custom_step_file,"r", encoding="utf-8") as step_file:
-                step_data = json.load(step_file)
-            for key,value in step_data.items():
-                self[key]=value
+            self.load_step_file(custom_step_file)
         else:
             # Assign attributes which have been provided
             import uuid
@@ -49,47 +44,56 @@ class CustomStep:
     def __setitem__(self, key, value):
         setattr(self, key, value)
    
-    def create_custom_step(self, custom_step_path):
+    def create_custom_step(self, custom_step_path) -> str:
         """This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path."""
         import json
-        with open(custom_step_path,"w", encoding="utf-8") as f:
-            json.dump(self.__dict__, f)
-        print(f"Custom Step created at {custom_step_path}")
-        return self
+        try:
+            with open(custom_step_path,"w", encoding="utf-8") as f:
+                json.dump(self.__dict__, f)
+            return f"Custom Step created at {custom_step_path}"
+        except Exception as e:
+            return f"Error occurred while creating custom step: {e}"
+        
 
-    def extract_sas_program(self,custom_step_file) -> str:
-        """This function extracts and returns the SAS program portion of a custom step file.  Provide the full path or URLto the custom step as an argument."""
-        if not custom_step_file:
-            step_data = self.__dict__["templates"]["SAS"]
+    def extract_sas_program(self,custom_step_file: str = None) -> str:
+        """This function extracts and returns either its own SAS program portion or that of a custom step file.  Provide the full path or URLto the custom step as an argument."""
+        if custom_step_file is None:
+            step_data = self.__dict__
         else:
             step_data = self.load_step_file(custom_step_file)
         return step_data["templates"]["SAS"]
     
-    def extract_ui(self,custom_step_file) -> str:
+    def extract_ui(self,custom_step_file: str = None) -> str:
         """This function extracts and returns the UI configuration of a custom step file.  Provide the full path or URL to the custom step as an argument."""
         if not custom_step_file:
-            step_data = self.__dict__["ui"]
+            step_data = self.__dict__
         else:
             step_data = self.load_step_file(custom_step_file)
         return step_data["ui"]
     
-    def attach_sas_program(self,sas_file):
+    def attach_sas_program(self,sas_file) -> str:
         """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""
-        with open(sas_file,"r") as sas_f:
-            self["templates"]={"SAS":sas_f.read()}
-        return self
-    
-    def attach_ui(self,ui_json_file):
+        try:
+            with open(sas_file,"r") as sas_f:
+                self["templates"]={"SAS":sas_f.read()}
+            return "Custom step object updated with SAS program template from "+sas_file
+        except Exception as e:
+            return f"Error occurred while attaching SAS program: {e}"
+
+    def attach_ui(self,ui_json_file) ->str:
         """This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument."""
         import json
-        with open(ui_json_file,"r") as f:
-             js = json.load(f)
-        jsd = json.dumps(js)
-        self["ui"]=jsd
-        return self
-        
+        try:
+            with open(ui_json_file,"r") as f:
+                js = json.load(f)
+            jsd = json.dumps(js)
+            self["ui"]=jsd
+            return "Custom step object updated with UI configuration from "+ui_json_file
+        except Exception as e:
+            return f"Error occurred while attaching UI configuration: {e}"
+
     def get_pages(self) -> list:
-        """This function returns all pages provided in a CustomStep object. Introduced v0.3.3"""
+        """This function returns all pages in a CustomStep object. Introduced v0.3.3"""
         import json
         pages = []
         ui = json.loads(self.__dict__["ui"])
@@ -97,7 +101,7 @@ class CustomStep:
             pages.append(page)
         return pages
 
-    def list_keys(self):
+    def list_keys(self)->list:
         """This function lists and returns all keys forming part of a CustomStep object."""
         keys = []
         for key in self.__dict__:
@@ -105,7 +109,7 @@ class CustomStep:
             keys.append(key)
         return keys
 
-    def load_step_file(self, custom_step_file):
+    def load_step_file(self, custom_step_file)->object:
         "This functions loads a custom step object with attributes contained in a custom step file, either local or from a URL."
         import json
         from pathlib import Path
@@ -126,64 +130,68 @@ class CustomStep:
             self[key]=value
         return step_data
     
-    def add_about_page(self):
+    def add_about_page(self) -> str:
         """This function adds a templated About page to the UI of a custom step object."""
         from .create_about_page import about_page
         import json
         ui = json.loads(self.__dict__["ui"])
+        for pages in ui["pages"]:
+            if pages.get("id") == about_page.get("id"):
+                return "About page already exists in the UI."
         ui["pages"].append(about_page)
         self["ui"]=json.dumps(ui)
-        return self
+        return "About page added to the UI."
     
-    def generate_readme(self, readme_file, description, trigger_name=""):
-        """This function generates a README file for a custom step object. Provide the full path to the README file as an argument."""
-        readme_template = (f"# {self.displayName}\n"
-                           f"{description}\n"
-                           "## A general idea\n\n"
-                           "----\n"
-                           "## Table of Contents\n\n"
-                           "----\n"
-                           "## Requirements\n\n"
-                           "-----\n"
-                           "## Parameters\n\n"
-                           "-----\n"
-                           "## Run-time Control\n"
-                           "Note: Run-time control is optional.  You may choose whether to execute the main code of this step or not, based on upstream conditions set by earlier SAS programs.  This includes nodes run prior to this custom step earlier in a SAS Studio Flow, or a previous program in the same session.\n\n"
-                           "Refer this blog (https://communities.sas.com/t5/SAS-Communities-Library/Switch-on-switch-off-run-time-control-of-SAS-Studio-Custom-Steps/ta-p/885526) for more details on the concept.\n"
-                           "The following macro variable,\n"
-                           "```sas\n"
-                           f"{trigger_name}_run_trigger\n"
-                           "```\n"
-                           "will initialize with a value of 1 by default, indicating an 'enabled' status and allowing the custom step to run.\n"
-                           "If you wish to control execution of this custom step, include code in an upstream SAS program to set this variable to 0.  This 'disables' execution of the custom step.\n"
-                           "To 'disable' this step, run the following code upstream:\n"
-                           "```sas\n"
-                           f"%global {trigger_name}_run_trigger;\n"
-                           f"%let {trigger_name}_run_trigger = 0;\n"
-                           "```\n"
-                           "To 'enable' this step again, run the following (it's assumed that this has already been set as a global variable):\n"
-                           "```sas\n"
-                           f"%let {trigger_name}_run_trigger = 1;\n"
-                           "```\n"
-                           "IMPORTANT: Be aware that disabling this step means that none of its main execution code will run, and any  downstream code which was dependent on this code may fail.  Change this setting only if it aligns with the objective of your SAS Studio program.\n"                           
-                           "-----\n"
-                           "## Documentation\n\n"
-                           "-----\n"
-                           "## SAS Program\n\n"
-                           "Refer [here]() for the SAS program used by the step.  You'd find this useful for situations where you wish to execute this step through non-SAS Studio Custom Step interfaces such as the [SAS Extension for Visual Studio Code](https://github.com/sassoftware/vscode-sas-extension), with minor modifications.\n"
-                           "-----\n"
-                           "## Installation & Usage\n\n"
-                           "- Refer to the [steps listed here](https://github.com/sassoftware/sas-studio-custom-steps#getting-started---making-a-custom-step-from-this-repository-available-in-sas-studio).\n"
-                           "----\n"
-                           "## Created/contact:\n\n"
-                           f"- Created by {self.createdBy}\n"
-                           "----\n"
-                           "## Change Log\n"
-                           f"* Version {self.version}({self.modifiedTimeStamp})\n    - <Enter changes here>"
-                           )
-            
-        with open(readme_file,"w") as f:
-            f.write(readme_template)
-        print(f"README file generated at {readme_file}")
+    def add_starter_page(self) -> str:
+        """This function adds a starter page to the UI of a custom step object."""
+        from .create_starter_page import starter_page
+        import json
+        ui = json.loads(self.__dict__["ui"])
+        for pages in ui["pages"]:
+            if pages.get("id") == starter_page.get("id"):
+                return "Starter page already exists in the UI. "
+        ui["pages"].append(starter_page)
+        self["ui"]=json.dumps(ui)
+        return "Starter page added to the UI."
 
+    def create_sas_program(self, prompt: str) -> str:
+        """This function creates a SAS program based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
+        from .gemini_api import generate_sas_code
+        try:
+            sas_code = generate_sas_code(f"User prompt: {prompt}\n\n Current UI configuration:{self.__dict__['ui']}")
+            self["templates"]={"SAS":sas_code}
+            return "Program generated and attached to the custom step object successfully."
+        except Exception as e:
+            return f"Error occurred: {e}"   
+
+    def create_ui(self, prompt: str) -> str:
+        """This function creates a UI configuration based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
+        from .gemini_api import generate_ui
+        try:
+            ui_config = generate_ui(f"User prompt: {prompt}\n\n Current SAS code:{self.__dict__['templates']['SAS']}")
+            self["ui"]= ui_config
+            return "UI configuration generated and attached to the custom step object successfully."
+        except Exception as e:
+            return f"Error occurred: {e}"
+
+    def modify_sas_program(self, prompt: str) -> str:
+        """This function creates a SAS program based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
+        from .gemini_api import modify_sas_code
+        try:
+            sas_code = modify_sas_code(f"User prompt: {prompt}\n\nCurrent SAS code:\n{self.__dict__['templates']['SAS']}\n\nCurrent UI config:\n{self.__dict__['ui']}")
+            self["templates"]={"SAS":sas_code}
+            return "SAS program modified"
+        except Exception as e:
+            return f"Error occurred: {e}"
+    
+    def generate_readme(self, prompt:str, readme_file:str):
+        """This function generates a README file for a custom step object using a Large Language Model. . Provide the full path to the README file as an argument."""
+        from .gemini_api import generate_readme
+        try:
+            readme_template = generate_readme(self.__dict__['ui'], self.__dict__['templates']['SAS'], prompt)
+            with open(readme_file,"w", encoding="utf-8") as f:
+                f.write(readme_template)
+            return f"README file generated at {readme_file}"
+        except Exception as e:
+            return f"Error occurred: {e}"
     
