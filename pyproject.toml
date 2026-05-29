@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_sas_studio_custom_steps"
-version = "0.9.9"
+version = "1.0.0"
 authors = [
-  { name="Sundaresh Sankaran", email="sundaresh.sankaran@sas.com" },
+  { name="Sundaresh Sankaran", email="sundaresh.sankaran@gmail.com" },
 ]
-description = "A package containing a Python class and associated methods to facilitate operations on SAS Studio Custom Steps."
+description = "A package containing a Python class and associated methods to create and manipulate SAS Studio Custom Step files."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [

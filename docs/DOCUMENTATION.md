@@ -1,7 +1,21 @@
 # Package Documentation
 
 ## Methods
+----
 
+### create_custom_step
+*create_custom_step(self, custom_step_path)*
+
+This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path.
+
+**Inputs**
+1. self:  CustomStep object
+2. custom_step_path:  Path to a SAS Studio Custom Step file that will get created.
+
+**Returns**
+- Creation / Error message (str)
+
+----
 ### extract_sas_program
 *extract_sas_program(self, custom_step_file)*
 
@@ -12,7 +26,7 @@ This function extracts and returns the SAS program portion of a custom step file
 2. custom_step_file:  Path to a SAS Studio Custom Step file
 
 **Returns**
-- String
+- sas_program: String
 
 ----
 ### extract_ui
@@ -25,33 +39,50 @@ This function extracts and returns the SAS program portion of a custom step file
 2. custom_step_file:  Path to a SAS Studio Custom Step file
 
 **Returns**
-- String
-
+- UI configuration (a JSON structure): String
 ----
+### attach_sas_program
+*attach_sas_program(self,sas_file)*
 
-### load_step_file
-*load_step_file(self, custom_step_file)*
+*Version 0.4.0 onwards*
 
-This functions loads a custom step object with attributes contained in a custom step file (.step).  Provide the full path to the custom step as an argument.
+This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument.
 
 **Inputs**
 1. self:  CustomStep object
-2. custom_step_file:  Path to a SAS Studio Custom Step file
+2. sas_file:  Path to a SAS program file used for the code gen.
 
 **Returns**
-- CustomStep
+- Success / error message: String
 
 ----
+### attach_ui
+*attach_ui(self,ui_json_file)*
 
+*Version 0.4.0 onwards*
 
-### create_custom_step
-*create_custom_step(self, custom_step_path)*
-
-This function writes a CustomStep object to a SAS Studio Custom Step file at a desired path.
+This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument.
 
 **Inputs**
-1. self:  CustomStep object
-2. custom_step_path:  Path to a SAS Studio Custom Step file that will get created.
+1. self: CustomStep object
+2. ui_json_file: Path to a JSON file which holds UI configuration
+
+**Returns**
+- Success / error message: String
+
+----
+### get_pages
+*get_pages(self)*
+
+*Version 0.3.3 onwards*
+
+This function returns all pages provided in a CustomStep object. 
+
+**Input**
+- self:  CustomStep object
+
+**Returns**
+- List
 
 ----
 
@@ -68,52 +99,109 @@ This function lists and returns all keys forming part of a CustomStep object.
 
 ----
 
-### get_pages
-*get_pages(self)*
+### load_step_file
+*load_step_file(self, custom_step_file)*
 
-*Version 0.3.3 onwards*
-
-This function returns all pages provided in a CustomStep object. 
-
-**Input**
-- self:  CustomStep object
-
-**Returns**
-- List
-
-----
-### attach_sas_program
-*attach_sas_program(self,sas_file)*
-
-*Version 0.4.0 onwards*
-
-This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument.
+This functions loads a custom step object with attributes contained in a custom step file, either local or from a URL.
 
 **Inputs**
 1. self:  CustomStep object
-2. sas_file:  Path to a SAS program file used for the code gen.
+2. custom_step_file:  Path to a SAS Studio Custom Step file
+
+**Returns**
+- CustomStep object
 
 ----
-### attach_ui
-*attach_ui(self,ui_json_file)*
+### add_about_page
 
-*Version 0.4.0 onwards*
+This function adds a templated About page to the UI of a custom step object.
 
-This function attaches a given UI configuration to the UI key of a custom step object.  Provide the full path to a JSON file with components as an argument.
+**Inputs**
+- CustomStep object
+
+**Returns**
+- Success / error message: String
+
+----
+
+### add_starter_page(self) -> str:
+
+This function adds a starter page to the UI of a custom step object.
+
+**Inputs**
+- CustomStep object
+
+**Returns**
+- Success / Error message : String
+
+----
+## Functions making use of AI to generate artifacts
+**Note**: To use these functions, set the `GEMINI_API_KEY` environment variable to a valid API key value.  Visit Google AI Studio for obtaining an API key.  Use the `sample.env` provided in this repository as a starter, rename to `.env` and paste your key there. Do not share your API key with anyone.
+
+**IMPORTANT**: All outputs returned from Generative AI tools such as LLMs should be carefully reviewed prior to actual use.  Quality of Generative AI outputs are determined by the Large Language Model in use and may be incorrect. Always review the same.
+
 
 ----
 ### generate_readme
-*generate_readme(self,readme_file, description, trigger_name)*
+*generate_readme(self,prompt, readme_file)*
 
-*Version 0.5.0 onwards*
+*Version 0.5.0 onwards, refactored for Gen AI use version 0.9.9 onwards*
 
-This function generates a README file for a custom step object. Provide the full path to the README file as an argument.  The README makes use of a template which has been developed based on experience.  The function can be edited to modify the same.
+This function generates a README file for a custom step object. Provide a prompt with instructions regarding the README file and the full path to the README file as an argument.  The README is generated by a Google Gemini Flash 3.5 model.   Review the "IMPORTANT" note at the top of this section.  
 
 **Inputs**
 1. self:  CustomStep object
-2. readme_file:  Path to a target README file that will be created by the function.  Existing files are overwritten.
-3. description: Description of the custom step provided by the designer
-4. trigger_name:  Name of a trigger macro variable to facilitate run-time control of the custom step. Set to blank by default.
+2. prompt: String; instructions regarding layout, contents and information about the README file.
+3. readme_file:  Path to a target README file that will be created by the function.  Existing files are overwritten.
+
+**Returns**
+- Success / error message : String
+
+----
+### create_sas_program
+*create_sas_program(self,prompt)*
+
+*With Gen AI use version 0.9.9 onwards*
+
+This function generates a SAS program based on instructions for a custom step object. Provide a prompt with instructions regarding the SAS program you wish to create.  The code is generated by a Google Gemini Flash 3.5 model.  Review the "IMPORTANT" note at the top of this section.  
+
+**Inputs**
+1. self:  CustomStep object
+2. prompt: String; instructions regarding objectives and approach for the SAS program file.
+
+**Returns**
+- Success / error message : String
+
+----
+### create_sas_program
+*create_ui(self,prompt)*
+
+*With Gen AI use version 0.9.9 onwards*
+
+This function generates a JSON UI configuration based on instructions for a custom step object. Provide a prompt with instructions regarding the UI you want to create.  The UI is generated by a Google Gemini Flash 3.5 model. It is recommended to compare with existing SAS Studio Custom Step objects and make proper use. Review the "IMPORTANT" note at the top of this section.  
+
+**Inputs**
+1. self:  CustomStep object
+2. prompt: String; instructions regarding objectives and approach for the UI configuration.
+
+**Returns**
+- Success / error message : String
+
+----
+### modify_sas_program
+*modify_sas_program(self,prompt)*
+
+*With Gen AI use version 0.9.9 onwards*
+
+This function modifies an existing SAS program based on instructions for a custom step object. Provide a prompt with instructions regarding the SAS program you wish to create.  The code is generated by a Google Gemini Flash 3.5 model.  Review the "IMPORTANT" note at the top of this section.  
+
+**Inputs**
+1. self:  CustomStep object
+2. prompt: String; instructions regarding changes, objectives and approach for the SAS program file.
+
+**Returns**
+- Success / error message : String
+----
 
 ## Objects
 

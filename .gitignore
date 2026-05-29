@@ -3,6 +3,8 @@
 package
 build/venv
 examples
+examples/build/*
+
 .DS_Store
 __pycache__
 */venv

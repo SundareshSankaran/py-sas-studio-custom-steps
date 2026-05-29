@@ -175,7 +175,7 @@ class CustomStep:
             return f"Error occurred: {e}"
 
     def modify_sas_program(self, prompt: str) -> str:
-        """This function creates a SAS program based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
+        """This function modifies a SAS program based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
         from .gemini_api import modify_sas_code
         try:
             sas_code = modify_sas_code(f"User prompt: {prompt}\n\nCurrent SAS code:\n{self.__dict__['templates']['SAS']}\n\nCurrent UI config:\n{self.__dict__['ui']}")
@@ -184,7 +184,7 @@ class CustomStep:
         except Exception as e:
             return f"Error occurred: {e}"
     
-    def generate_readme(self, prompt:str, readme_file:str):
+    def generate_readme(self, prompt:str, readme_file:str)-> str:
         """This function generates a README file for a custom step object using a Large Language Model. . Provide the full path to the README file as an argument."""
         from .gemini_api import generate_readme
         try:
