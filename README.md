@@ -6,6 +6,8 @@ As SAS Viya continues to welcome a diverse set of users with different preferenc
 
 Note that SAS Viya, SAS Viya Workbench etc. refer to commercial software provided by SAS Institute.  The open-source package in this repository is  not officially provided or supported by SAS Institute. It only contains a convenient tool for manipulating a SAS Studio Custom Step, a serialized file.  It does not execute SAS algorithms or procedures.  SAS programs and SAS Studio Custom Steps require a SAS / SAS Viya license to execute.
 
+A wiki of this repo has been generated using DeepWiki and is available here: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/SundareshSankaran/py-sas-studio-custom-steps)
+
 ## Installation
 1. Clone this repository
 2. To install locally in editable mode, refer [here](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/blob/main/build/local_install_quick_start.md)
