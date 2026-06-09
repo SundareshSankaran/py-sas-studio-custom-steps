@@ -1,6 +1,6 @@
 # py-sas-studio-custom-steps: A Python package for SAS Studio Custom Steps
 
-This repository provides a Python class and associated methods to create, access and manipulate SAS Studio Custom Steps.  [SAS Studio Custom Steps](https://go.documentation.sas.com/doc/en/sasstudiocdc/default/webeditorcdc/webeditorsteps/titlepage.htm) are low-code components designed for analytical and data engineering operations on the SAS Viya platform.  They provide a user interface for parameters which are then used to execute an associated SAS program.  Custom Steps provide easy access to common operations, boost code reusability, and help establish best practices in programming.
+This repository provides a Python class and associated methods to create, access and manipulate SAS Studio Custom Steps.  [SAS Studio Custom Steps](https://go.documentation.sas.com/doc/en/sasstudiocdc/default/webeditorcdc/webeditorsteps/titlepage.htm) are low-code components designed for analytical and data engineering operations on the SAS Viya platform.  They provide a user interface to accept parameters which are then executed by an associated SAS program.  Custom Steps provide easy access to common operations, boost code reusability, and help establish best practices in programming.
 
 As SAS Viya continues to welcome a diverse set of users with different preferences (e.g. programming, low-code / no-code), a Python-based framework for interacting with custom steps accelerates code reusability and assists rapid development and testing of custom steps. This package can be used to access and port custom step capabilities from SAS Studio and non-SAS Studio applications, such as  [SAS Viya Workbench](https://www.sas.com/en_us/software/viya/workbench.html), Visual Studio Code, Claude Code and other Python IDEs.
 
@@ -69,11 +69,13 @@ Some functions (described in [Documentation](https://github.com/SundareshSankara
 This repository contains a tasks.json meant for use in Visual Studio Code which helps clean up temporary files and stands up a virtual environment for quick development and exploration.  Remove this file if you do not want to have Visual Studio Code run the tasks in `tasks.json`.
 
 ## Change Log
-* Version: 1.0.0 (28MAY2025)
+* Version: 1.0.1 (08JUN2026)
+  - Typos and refinement
+* Version: 1.0.0 (28MAY2026)
   - Major release
-* Version: 0.9.9 (27MAY2025)
+* Version: 0.9.9 (27MAY2026)
   - Prior to a major release
-* Version: 0.5.1 (17JAN2025)
+* Version: 0.5.1 (17JAN2026)
   - Method to create a README file 
 * Version: 0.4.0 (09JAN2025)
   - Methods to add SAS program and UI components to a Custom Step

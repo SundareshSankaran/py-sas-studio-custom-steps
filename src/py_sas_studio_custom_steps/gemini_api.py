@@ -88,6 +88,7 @@ def generate_ui(user_prompt: str) -> str:
         corresponding SAS code, and the type of controls (of which the ones provided in the step are only examples. 
         The other aspect is that of how closely they align with the SAS code, for example, if a macro variable points to a dataset in the 
         SAS code, the control is best suited as an input table. 
+        The context might or might not contain current SAS code, but if it does, please use it to guide the design of the UI.
         Return only the UI configuration (in a json structure) without background explanation or markdown.  The structure of the json is sacrosanct. 
         
         The following example UI configuration and corresponding SAS program are meant to be used as a guide.
