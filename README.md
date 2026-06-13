@@ -75,18 +75,8 @@ This repository contains a tasks.json meant for use in Visual Studio Code which 
   - Typos and refinement
 * Version: 1.0.0 (28MAY2026)
   - Major release
-* Version: 0.9.9 (27MAY2026)
-  - Prior to a major release
-* Version: 0.5.1 (17JAN2026)
-  - Method to create a README file 
-* Version: 0.4.0 (09JAN2025)
-  - Methods to add SAS program and UI components to a Custom Step
-* Version: 0.3.3 (22SEP2024)
-  - New method to return pages from a Custom Step object
-* Version: 0.2.3 (07AUG2024)
-  - New method to instantiate a class through a Custom Step file
-* Version: 0.1.3 (07AUG2024)
-  - Initial version plus teething issues / doc fixes
+
+Refer  [`CHANGELOG.md`](CHANGELOG.md) for other changes.
 
 ## Contact
 * [Sundaresh Sankaran](mailto:sundaresh.sankaran@gmail.com)
