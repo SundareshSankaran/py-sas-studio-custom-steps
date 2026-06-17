@@ -2,6 +2,7 @@
 
 |Version|Date|Details|Type|
 |-------|----|-------|----|
+|2.0.0|16JUN2026|Added MCP server script|Major|
 |1.0.1|08JUN2026|Typos and refinement|Patch|
 |1.0.0|28MAY2026|Major release|Major|
 |0.9.9|27MAY2026|Prior to a major release|Minor|

@@ -4,6 +4,7 @@ package
 build/venv
 examples
 examples/build/*
+.vscode/mcp.json
 
 .DS_Store
 __pycache__

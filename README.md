@@ -8,6 +8,14 @@ Note that SAS Viya, SAS Viya Workbench etc. refer to commercial software provide
 
 A wiki of this repo has been generated using DeepWiki and is available here: [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/SundareshSankaran/py-sas-studio-custom-steps)
 
+## 📢 New Announcement - NOW AVAILABLE AS AN MCP SERVER SCRIPT!!!
+
+**Important update:** Methods forming part of the Python class used in this package, `CustomStep`, are now also accessible as part of an MCP server.  This MCP server script is located here: [stdio_mcp_script.py](/src/mcp_sas_studio_custom_steps/stdio_mcp_script.py) and can be served over stdio.  
+
+**This means that you can now interact with py-sas-studio-custom-steps and build your own custom step through AI agents!!!**
+
+
+
 ## Installation
 1. Clone this repository
 2. To install locally in editable mode, refer [here](https://github.com/SundareshSankaran/py-sas-studio-custom-steps/blob/main/build/local_install_quick_start.md)
@@ -71,10 +79,9 @@ Some functions (described in [Documentation](https://github.com/SundareshSankara
 This repository contains a tasks.json meant for use in Visual Studio Code which helps clean up temporary files and stands up a virtual environment for quick development and exploration.  Remove this file if you do not want to have Visual Studio Code run the tasks in `tasks.json`.
 
 ## Change Log
-* Version: 1.0.1 (08JUN2026)
-  - Typos and refinement
-* Version: 1.0.0 (28MAY2026)
-  - Major release
+* Version: 2.0.0 (16JUN2026)
+  - Now also available as an MCP server script
+
 
 Refer  [`CHANGELOG.md`](CHANGELOG.md) for other changes.
 

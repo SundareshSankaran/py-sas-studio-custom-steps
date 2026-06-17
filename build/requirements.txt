@@ -6,3 +6,5 @@ twine
 google-genai
 jupyter
 ipykernel
+mcp
+
