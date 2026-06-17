@@ -2,8 +2,8 @@
 *.egg-info
 package
 build/venv
-examples
-examples/build/*
+package
+package/build/*
 .vscode/mcp.json
 
 .DS_Store
