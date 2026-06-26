@@ -280,6 +280,23 @@ def modify_sas_program(prompt: str) -> str:
         return result
     except Exception as e:
         return f"Error: {str(e)}"
+    
+@mcp.tool()
+def change_name(new_name: str) -> str:
+    """
+    Change the name of the current custom step.
+    
+    This function changes the name of the current custom step object.
+    
+    Args:
+        new_name: The new name for the custom step
+    """
+    try:
+        step = get_custom_step()
+        result = step.change_name(new_name)
+        return result
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 if __name__ == "__main__":
     mcp.run()

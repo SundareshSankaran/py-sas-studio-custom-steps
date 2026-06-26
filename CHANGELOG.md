@@ -2,6 +2,7 @@
 
 |Version|Date|Details|Type|
 |-------|----|-------|----|
+|2.1.0|26JUN2026|Add change_name_function and tool|Minor|
 |2.0.1|16JUN2026|Fix link|Patch|
 |2.0.0|16JUN2026|Added MCP server script|Major|
 |1.0.1|08JUN2026|Typos and refinement|Patch|

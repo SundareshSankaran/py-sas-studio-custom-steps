@@ -202,7 +202,18 @@ This function modifies an existing SAS program based on instructions for a custo
 **Returns**
 - Success / error message : String
 ----
+### change_name
+*change_name(self,new_name)*
 
+This function changes the name of a custom step object. Provide the new name as an argument. 
+
+**Inputs**
+1. self:  CustomStep object
+2. new_name: String; new name for the custom step.
+
+**Returns**
+- Success / error message : String
+----
 ## Objects
 
 ### CustomStep

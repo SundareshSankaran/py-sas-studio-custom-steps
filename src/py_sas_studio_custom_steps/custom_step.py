@@ -194,4 +194,11 @@ class CustomStep:
             return f"README file generated at {readme_file}"
         except Exception as e:
             return f"Error occurred: {e}"
-    
+        
+    def change_name(self, new_name: str) -> str:
+        """This function changes the name of a custom step object. Provide the new name as an argument."""
+        try:
+            self["name"] = new_name
+            return f"Name changed to {new_name}"
+        except Exception as e:
+            return f"Error occurred: {e}"
