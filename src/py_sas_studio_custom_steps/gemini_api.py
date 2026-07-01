@@ -1,8 +1,9 @@
 
 
-def generate_sas_code(user_prompt: str) -> str:
+def generate_sas_code(user_prompt: str, current_ui_config: dict = None, current_sas_code: str = None) -> str:
     """This function generates a SAS program based on a given user prompt using the Gemini API."""
     import os
+    import json
     from google import genai
     from dotenv import load_dotenv
     load_dotenv()  # Load environment variables from .env file
@@ -10,17 +11,41 @@ def generate_sas_code(user_prompt: str) -> str:
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
     system_prompt = """
-        Generate a SAS program (meant for execution in a SAS Studio custom step)based on user input and the current UI configuration where provided. Follow a parameterised approach where input parameters, output datasets and reports are represented as macro variables rather than hard coded.
-        Return only the SAS code without background explanation or markdown.  The SAS code should be commented and indented for usability.
+        Generate a SAS program (meant for execution in a SAS Studio custom step) based on user input, the 
+        current UI configuration and current SAS code where provided. Follow a parameterised approach where input parameters, output datasets
+        and reports are represented as macro variables rather than hard coded.
+        Return only the SAS code without background explanation or markdown.  
+        If current SAS code is provided, treat it as a code improvement opportunity keeping the objective in mind.
+        If current UI configuration is provided, ensure alignment of UI controls with macro variables in the SAS code.
+        The SAS code should be commented and indented for usability.
+        The SAS Code always starts with a docstring comment block which explains the purpose of the code, input parameters and output. Should also include Author name and version in Version X.X.X (DDMONYYYY) format.
         An example response for a hypothetical user prompt is as follows.
         Example prompt: I want to create a summary dataset which aggregates an input table by one or more groupby variables. Aggregation metrics are sum and max.
         Example response:
 
+        /************************************************************************
+        Aggregate Input Table
+
+        Purpose: This SAS program aggregates an input dataset by specified groupby variables and computes specified aggregation metrics.
+        Input Parameters:
+        - input_table: Name of the input dataset (macro variable)
+        - groupby_vars: List of groupby variables, separated by spaces (macro variable)
+        - aggregation_metrics: List of aggregation metrics (e.g. sum, max), separated by spaces (macro variable)
+        Output:
+        - output_table: Name of the output summary dataset (macro variable)
+
+        Created: [Author Name]
+        Version: 1.0.0 (12MAR2026)
+        ************************************************************************/;
         /* Define macro variables for input parameters */
         %let input_table=; /* Name of the input dataset */
         %let groupby_vars=; /* List of groupby variables, separated by spaces */
         %let aggregation_metrics=; /* List of aggregation metrics (e.g. sum, max), separated by spaces */
         %let output_table=; /* Name of the output summary dataset */
+
+        /************************************************************************
+        EXECUTION CODE
+        ************************************************************************/;
 
         /* Create summary dataset with dynamic groupby and aggregation */
         proc sql;
@@ -40,7 +65,7 @@ def generate_sas_code(user_prompt: str) -> str:
 
     response = client.models.generate_content(
         model="gemini-3.5-flash",
-        contents=system_prompt + "\n\n" + user_prompt
+        contents=system_prompt + "\n\n" + user_prompt + "\n\n current UI configuration:\n\n" + json.dumps(current_ui_config) + "\n\n current SAS Code:\n\n" + current_sas_code
     )
     sas_code = response.text
     return sas_code

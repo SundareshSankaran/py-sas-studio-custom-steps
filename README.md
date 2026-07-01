@@ -79,7 +79,7 @@ Some functions (described in [Documentation](https://github.com/SundareshSankara
 This repository contains a tasks.json meant for use in Visual Studio Code which helps clean up temporary files and stands up a virtual environment for quick development and exploration.  Remove this file if you do not want to have Visual Studio Code run the tasks in `tasks.json`.
 
 ## Change Log
-* Version: 2.0.1 (16JUN2026)
+* Version: 2.2.0 (01JUL2026)
   - Fix link
 * Version: 2.0.0 (16JUN2026)
   - Now also available as an MCP server script

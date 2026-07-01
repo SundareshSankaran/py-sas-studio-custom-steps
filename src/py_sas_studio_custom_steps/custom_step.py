@@ -1,6 +1,12 @@
 class CustomStep:
     """This class helps you perform operations on a SAS Studio Custom Step programmatically"""
-    def __init__(self, custom_step_file = None, name=None,creationTimeStamp=None, modifiedTimeStamp=None, createdBy=None, modifiedBy=None, displayName=None, localDisplayName=None, properties=None, links=None, metadataVersion=None, version=None, type=None, flowMetadata=None, ui={"showPageContentOnly": True, "pages": []}, templates={"SAS":""}) -> object:
+    def __init__(self, custom_step_file:str = None, name: str =None,
+                 creationTimeStamp=None, modifiedTimeStamp=None, createdBy: str=None, 
+                 modifiedBy: str =None, displayName: str =None, localDisplayName: str =None, 
+                 properties=None, links=None, metadataVersion: str=None, 
+                 version=None, type=None, flowMetadata=None, 
+                 ui:dict ={"showPageContentOnly": True, "pages": []}, 
+                 templates:dict ={"SAS":""}, sas_program_file:str =None) -> object:
         import json
         # Initialisation of attributes
         self.name=None 
@@ -18,6 +24,7 @@ class CustomStep:
         self.flowMetadata=None
         self.ui=json.dumps({"showPageContentOnly": True, "pages": []})
         self.templates={"SAS":""}
+        
 
         # Load atttributes present in a custom step file
         if custom_step_file:
@@ -39,7 +46,10 @@ class CustomStep:
             self.type=type if type else self.type
             self.flowMetadata=flowMetadata if flowMetadata else self.flowMetadata
             self.ui=json.dumps(ui) if ui else self.ui
-            self.templates=templates if templates else self.templates
+            if sas_program_file:
+                self.attach_sas_program(sas_program_file)
+            else:
+                self.templates=templates if templates else self.templates
 
     def __setitem__(self, key, value):
         setattr(self, key, value)
@@ -74,7 +84,7 @@ class CustomStep:
     def attach_sas_program(self,sas_file) -> str:
         """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""
         try:
-            with open(sas_file,"r") as sas_f:
+            with open(sas_file,"r", encoding="utf-8") as sas_f:
                 self["templates"]={"SAS":sas_f.read()}
             return "Custom step object updated with SAS program template from "+sas_file
         except Exception as e:
@@ -158,7 +168,7 @@ class CustomStep:
         """This function creates a SAS program based on a given prompt using Gemini API, and attaches it to the SAS program template key of a custom step object.  Provide the prompt as an argument."""
         from .gemini_api import generate_sas_code
         try:
-            sas_code = generate_sas_code(f"User prompt: {prompt}\n\n Current UI configuration:{self.__dict__['ui']}")
+            sas_code = generate_sas_code(user_prompt = f"User prompt: {prompt}",current_ui_config = self.__dict__['ui'], current_sas_code = self.__dict__['templates']['SAS'])
             self["templates"]={"SAS":sas_code}
             return "Program generated and attached to the custom step object successfully."
         except Exception as e:
