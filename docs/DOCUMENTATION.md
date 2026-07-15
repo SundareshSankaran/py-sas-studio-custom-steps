@@ -173,7 +173,7 @@ This function generates a SAS program based on instructions for a custom step ob
 - Success / error message : String
 
 ----
-### create_sas_program
+### create_ui
 *create_ui(self,prompt)*
 
 *With Gen AI use version 0.9.9 onwards*
