@@ -2,6 +2,7 @@
 
 |Version|Date|Details|Type|
 |-------|----|-------|----|
+|2.2.3|26AUG2026|Fix Gemini AFC warning|Patch|
 |2.2.2|15JUL2026|Edited create_ui in documentation, thanks to @ShubhamPancholi for pointing out|Patch|
 |2.2.1|13JUL2026|Added list of models from Gemini|Patch|
 |2.2.0|01JUL2026|Add SAS program file at initialisation, enhanced create_sas_program|Minor|

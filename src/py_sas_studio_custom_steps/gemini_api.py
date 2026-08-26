@@ -62,13 +62,23 @@ def generate_sas_code(user_prompt: str, current_ui_config: dict = None, current_
 
         """
 
-    FALLBACK_MODELS = [ "gemini-3.1-pro-preview",   "gemini-3.5-flash", "gemini-3.0-pro",   "gemini-2.5-flash-image-preview",  "gemini-2.5-flash",    ]
+    FALLBACK_MODELS = ["gemini-3.7-flash","gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.1-pro-preview","gemini-3.1-flash-lite", "gemini-2.5-flash"]
 
     for model in FALLBACK_MODELS:
         try:
+           config={
+                "tools": [
+                    {
+                        "function_declarations": [
+                            {"name": "ping", "description": "Return pong"}
+                        ]
+                    }
+                ]
+            }   
            response = client.models.generate_content(
-               model="gemini-3.5-flash",
-               contents=system_prompt + "\n\n" + user_prompt + "\n\n current UI configuration:\n\n" + json.dumps(current_ui_config) + "\n\n current SAS Code:\n\n" + current_sas_code
+               model=model,
+               contents=system_prompt + "\n\n" + user_prompt + "\n\n current UI configuration:\n\n" + json.dumps(current_ui_config) + "\n\n current SAS Code:\n\n" + current_sas_code,
+               config = config
                )
         except Exception as e:
             print(f"Error with model {model}: {e}")
@@ -95,13 +105,23 @@ def modify_sas_code(user_prompt: str) -> str:
         The SAS code should be commented and indented for usability.
         """
 
-    FALLBACK_MODELS = [ "gemini-3.1-pro-preview",   "gemini-3.5-flash", "gemini-3.0-pro",   "gemini-2.5-flash-image-preview",  "gemini-2.5-flash",    ]
+    FALLBACK_MODELS = ["gemini-3.7-flash","gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.1-pro-preview","gemini-3.1-flash-lite", "gemini-2.5-flash"]
 
     for model in FALLBACK_MODELS:
         try:
+            config={
+                "tools": [
+                    {
+                        "function_declarations": [
+                            {"name": "ping", "description": "Return pong"}
+                        ]
+                    }
+                ]
+            }   
             response = client.models.generate_content(
-                model="gemini-3.5-flash",
-                contents=system_prompt + "\n\n" + user_prompt
+                model=model,
+                contents=system_prompt + "\n\n" + user_prompt,
+                config = config
                 )
         except Exception as e:
             print(f"Error with model {model}: {e}")
@@ -140,13 +160,23 @@ def generate_ui(user_prompt: str) -> str:
 
         """
 
-    FALLBACK_MODELS = [ "gemini-3.1-pro-preview",   "gemini-3.5-flash", "gemini-3.0-pro",   "gemini-2.5-flash-image-preview",  "gemini-2.5-flash",    ]
+    FALLBACK_MODELS = ["gemini-3.7-flash","gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.1-pro-preview","gemini-3.1-flash-lite", "gemini-2.5-flash"]
 
     for model in FALLBACK_MODELS:
         try:
+            config={
+                "tools": [
+                    {
+                        "function_declarations": [
+                            {"name": "ping", "description": "Return pong"}
+                        ]
+                    }
+                ]
+            }   
             response = client.models.generate_content(
-                model="gemini-3.5-flash",
-                contents=system_prompt + "\n\nUser prompt: \n\n" + user_prompt
+                model=model,
+                contents=system_prompt + "\n\nUser prompt: \n\n" + user_prompt,
+                config=config
                 )
         except Exception as e:
             print(f"Error with model {model}: {e}")
@@ -209,13 +239,23 @@ def generate_readme(ui_config: dict, sas_program: str,user_prompt: str) -> str:
 
         """
 
-    FALLBACK_MODELS = [ "gemini-3.1-pro-preview",   "gemini-3.5-flash", "gemini-3.0-pro",   "gemini-2.5-flash-image-preview",  "gemini-2.5-flash",    ]
+    FALLBACK_MODELS = ["gemini-3.7-flash","gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.5-flash", "gemini-3.1-pro-preview","gemini-3.1-flash-lite", "gemini-2.5-flash"]
 
     for model in FALLBACK_MODELS:
         try:
+            config={
+                "tools": [
+                    {
+                        "function_declarations": [
+                            {"name": "ping", "description": "Return pong"}
+                        ]
+                    }
+                ]
+            }   
             response = client.models.generate_content(
-                model="gemini-3.5-flash",
-                contents=f"{system_prompt}\n\nUser prompt: \n\n{user_prompt}\nExample SAS code:\n {sas_program}\n  Example UI Configuration: \n{ui_config}"
+                model=model,
+                contents=f"{system_prompt}\n\nUser prompt: \n\n{user_prompt}\nExample SAS code:\n {sas_program}\n  Example UI Configuration: \n{ui_config}",
+                config = config
                 )
         except Exception as e:
             print(f"Error with model {model}: {e}")

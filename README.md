@@ -79,8 +79,8 @@ Some functions (described in [Documentation](https://github.com/SundareshSankara
 This repository contains a tasks.json meant for use in Visual Studio Code which helps clean up temporary files and stands up a virtual environment for quick development and exploration.  Remove this file if you do not want to have Visual Studio Code run the tasks in `tasks.json`.
 
 ## Change Log
-* Version: 2.2.2 (15JUL2026)
-  - Corrected typo in documentation for create_ui
+* Version: 2.2.3 (26AUG2026)
+  - Fix Gemini AFC warning
 * Version: 2.2.0 (01JUL2026)
   - Fix link
 * Version: 2.0.0 (16JUN2026)
