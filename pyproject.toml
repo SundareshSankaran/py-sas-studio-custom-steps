@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py_sas_studio_custom_steps"
-version = "2.2.3"
+dependencies = ["google-genai"]
+version = "2.3.0"
 authors = [
   { name="Sundaresh Sankaran", email="sundaresh.sankaran@gmail.com" },
 ]
