@@ -65,21 +65,39 @@ class CustomStep:
             return f"Error occurred while creating custom step: {e}"
         
 
-    def extract_sas_program(self,custom_step_file: str = None) -> str:
-        """This function extracts and returns either its own SAS program portion or that of a custom step file.  Provide the full path or URLto the custom step as an argument."""
+    def extract_sas_program(self, custom_step_file: str = None, program_path: str = None) -> str:
+        """Extract and return a SAS program, optionally saving it to program_path."""
+
         if custom_step_file is None:
             step_data = self.__dict__
         else:
             step_data = self.load_step_file(custom_step_file)
-        return step_data["templates"]["SAS"]
+
+        sas_program = step_data["templates"]["SAS"]
+
+        if program_path is not None:
+            with open(program_path, "w", encoding="utf-8") as sas_file:
+                sas_file.write(sas_program)
+            return "SAS Program written to specified path"
+        else:
+            return sas_program
     
-    def extract_ui(self,custom_step_file: str = None) -> str:
-        """This function extracts and returns the UI configuration of a custom step file.  Provide the full path or URL to the custom step as an argument."""
+    def extract_ui(self, custom_step_file: str = None, ui_config_path: str = None) -> str:
+        """Extract and return a UI configuration, optionally saving it to ui_config_path."""
+
         if not custom_step_file:
             step_data = self.__dict__
         else:
             step_data = self.load_step_file(custom_step_file)
-        return step_data["ui"]
+
+        ui_config = step_data["ui"]
+        
+        if ui_config_path is not None:
+            with open(ui_config_path, "w", encoding="utf-8") as ui_file:
+                ui_file.write(ui_config)
+            return "UI configuration written to specified path"
+        else:
+            return ui_config
     
     def attach_sas_program(self,sas_file) -> str:
         """This function extracts the contents of a given SAS program and attaches it to the SAS program template key of a custom step object.  Provide the full path to the SAS program as an argument."""

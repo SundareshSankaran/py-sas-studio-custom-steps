@@ -155,39 +155,42 @@ def create_ui(prompt: str) -> str:
 
 
 @mcp.tool()
-def extract_sas_program(custom_step_file: str = None) -> str:
+def extract_sas_program(custom_step_file: str = None, program_path: str = None) -> str:
     """
-    Extract and return the SAS program portion of a custom step.
+    Extract and return the SAS program portion of a custom step, optionally saving it to a file.
     
     This function extracts and returns either its own SAS program portion or 
     that of a custom step file. Provide the full path or URL to the custom step 
-    as an argument.
+    as an argument. Provide program_path to also save the SAS program to a file.
     
     Args:
         custom_step_file: Full path or URL to the custom step file (optional)
+        program_path: Full path to save the extracted SAS program (optional)
     """
     try:
         step = get_custom_step()
-        result = step.extract_sas_program(custom_step_file)
+        result = step.extract_sas_program(custom_step_file, program_path)
         return result
     except Exception as e:
         return f"Error: {str(e)}"
 
 
 @mcp.tool()
-def extract_ui(custom_step_file: str = None) -> str:
+def extract_ui(custom_step_file: str = None, ui_config_path: str = None) -> str:
     """
-    Extract and return the UI configuration of a custom step.
+    Extract and return the UI configuration of a custom step, optionally saving it to a file.
     
     This function extracts and returns the UI configuration of a custom step file. 
-    Provide the full path or URL to the custom step as an argument.
+    Provide the full path or URL to the custom step as an argument. Provide ui_config_path
+    to also save the UI configuration to a file.
     
     Args:
         custom_step_file: Full path or URL to the custom step file (optional)
+        ui_config_path: Full path to save the extracted UI configuration (optional)
     """
     try:
         step = get_custom_step()
-        result = step.extract_ui(custom_step_file)
+        result = step.extract_ui(custom_step_file, ui_config_path)
         return result
     except Exception as e:
         return f"Error: {str(e)}"

@@ -17,26 +17,28 @@ This function writes a CustomStep object to a SAS Studio Custom Step file at a d
 
 ----
 ### extract_sas_program
-*extract_sas_program(self, custom_step_file)*
+*extract_sas_program(self, custom_step_file=None, program_path=None)*
 
-This function extracts and returns the SAS program portion of a custom step file.  Provide the full path to the custom step as an argument.
+This function extracts and returns the SAS program portion of a custom step file. Provide the full path to the custom step as an argument, and optionally provide `program_path` to save the extracted SAS program to a file.
 
 **Inputs**
 1. self:  CustomStep() object
-2. custom_step_file:  Path to a SAS Studio Custom Step file
+2. custom_step_file:  Path or URL to a SAS Studio Custom Step file (optional)
+3. program_path:  Path to save the extracted SAS program (optional)
 
 **Returns**
 - sas_program: String
 
 ----
 ### extract_ui
-*extract_ui(self, custom_step_file)*
+*extract_ui(self, custom_step_file=None, ui_config_path=None)*
 
-This function extracts and returns the SAS program portion of a custom step file.  Provide the full path or URL to the custom step as an argument.
+This function extracts and returns the UI configuration of a custom step file. Provide the full path or URL to the custom step as an argument, and optionally provide `ui_config_path` to save the extracted UI configuration to a file.
 
 **Inputs**
 1. self:  CustomStep() object
-2. custom_step_file:  Path to a SAS Studio Custom Step file
+2. custom_step_file:  Path or URL to a SAS Studio Custom Step file (optional)
+3. ui_config_path:  Path to save the extracted UI configuration (optional)
 
 **Returns**
 - UI configuration (a JSON structure): String

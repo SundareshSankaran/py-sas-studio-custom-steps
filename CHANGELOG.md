@@ -2,6 +2,7 @@
 
 |Version|Date|Details|Type|
 |-------|----|-------|----|
+|2.3.0|02NOV2026|Add parameters to save extracted artifacts to files|Minor|
 |2.2.3|26AUG2026|Fix Gemini AFC warning|Patch|
 |2.2.2|15JUL2026|Edited create_ui in documentation, thanks to @ShubhamPancholi for pointing out|Patch|
 |2.2.1|13JUL2026|Added list of models from Gemini|Patch|
